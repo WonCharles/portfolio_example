@@ -13,9 +13,14 @@
 
         body {
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-            color: #ffffff;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            color: var(--text-primary);
             overflow-x: hidden;
+            transition: all 0.8s ease;
+        }
+
+        [data-theme="dev"] body {
+            font-family: 'Courier New', monospace;
         }
 
         /* Navigation */
@@ -41,10 +46,11 @@
         .logo {
             font-size: 1.5rem;
             font-weight: bold;
-            background: linear-gradient(45deg, #2E8B57, #4A90E2);
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            transition: all 0.8s ease;
         }
 
         .nav-links {
@@ -54,14 +60,14 @@
         }
 
         .nav-links a {
-            color: #ffffff;
+            color: var(--text-primary);
             text-decoration: none;
             transition: color 0.3s ease;
             position: relative;
         }
 
         .nav-links a:hover {
-            color: #FF6B35;
+            color: var(--accent-color);
         }
 
         .nav-links a::after {
@@ -71,7 +77,7 @@
             left: 0;
             width: 0;
             height: 2px;
-            background: #FF6B35;
+            background: var(--accent-color);
             transition: width 0.3s ease;
         }
 
@@ -106,7 +112,7 @@
 
         .hero-subtitle {
             font-size: 1.5rem;
-            color: #cccccc;
+            color: var(--text-secondary);
             margin-bottom: 2rem;
             opacity: 0;
             transform: translateY(30px);
@@ -116,7 +122,7 @@
         .hero-description {
             font-size: 1.1rem;
             line-height: 1.6;
-            color: #aaaaaa;
+            color: var(--text-tertiary);
             margin-bottom: 3rem;
             opacity: 0;
             transform: translateY(30px);
@@ -126,7 +132,7 @@
         .cta-button {
             display: inline-block;
             padding: 1rem 2rem;
-            background: linear-gradient(45deg, #2E8B57, #4A90E2);
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
             color: white;
             text-decoration: none;
             border-radius: 50px;
@@ -137,44 +143,151 @@
 
         .cta-button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(70, 144, 226, 0.3);
+            box-shadow: 0 10px 30px var(--particle-color);
         }
 
-        /* DNA Animation */
+        /* Theme Variables */
+        :root {
+            --primary-color: #2E8B57;
+            --secondary-color: #4A90E2;
+            --accent-color: #FF6B35;
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2d2d2d;
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --text-tertiary: #aaaaaa;
+            --border-color: rgba(70, 144, 226, 0.2);
+            --particle-color: rgba(46, 139, 87, 0.6);
+        }
+
+        [data-theme="dev"] {
+            --primary-color: #00d4aa;
+            --secondary-color: #0070f3;
+            --accent-color: #ff6b6b;
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #1a1a1a;
+            --text-primary: #00ff00;
+            --text-secondary: #00cccc;
+            --text-tertiary: #888888;
+            --border-color: rgba(0, 255, 0, 0.2);
+            --particle-color: rgba(0, 255, 0, 0.6);
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            position: fixed;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            z-index: 1002;
+            background: var(--bg-secondary);
+            border: 2px solid var(--primary-color);
+            border-radius: 50px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 6px 30px var(--particle-color);
+        }
+
+        .theme-icon {
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            opacity: 0.5;
+        }
+
+        .theme-icon.active {
+            opacity: 1;
+            transform: scale(1.2);
+        }
+
+        /* Enhanced DNA Animation */
         .dna-container {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 300px;
-            height: 300px;
-            opacity: 0.1;
+            width: 400px;
+            height: 400px;
+            opacity: 0.3;
             z-index: 1;
+            cursor: pointer;
+            transition: all 1s ease;
+        }
+
+        .dna-container:hover {
+            opacity: 0.8;
+            transform: translate(-50%, -50%) scale(1.1);
         }
 
         .dna-helix {
             width: 100%;
             height: 100%;
             position: relative;
-            animation: rotate 10s linear infinite;
+            animation: rotate 15s linear infinite;
         }
 
+        .dna-element {
+            position: absolute;
+            font-size: 14px;
+            font-weight: bold;
+            color: var(--primary-color);
+            transition: all 1.5s ease;
+            opacity: 0.8;
+        }
+
+        .dna-container.morphing .dna-element {
+            color: var(--secondary-color);
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+        }
+
+        /* DNA Strands */
         .dna-strand {
             position: absolute;
             width: 4px;
             height: 100%;
-            background: linear-gradient(to bottom, #2E8B57, #4A90E2);
+            background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
             border-radius: 2px;
+            transition: all 1s ease;
         }
 
         .dna-strand:nth-child(1) {
             left: 30%;
-            animation: wave1 3s ease-in-out infinite;
+            animation: wave1 4s ease-in-out infinite;
         }
 
         .dna-strand:nth-child(2) {
             right: 30%;
-            animation: wave2 3s ease-in-out infinite;
+            animation: wave2 4s ease-in-out infinite;
+        }
+
+        .dna-container.morphing .dna-strand {
+            background: linear-gradient(to bottom, var(--secondary-color), var(--accent-color));
+            width: 6px;
+        }
+
+        /* Code Particles */
+        .code-particle {
+            position: absolute;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: var(--secondary-color);
+            opacity: 0;
+            transition: all 2s ease;
+            pointer-events: none;
+        }
+
+        .dna-container.morphing .code-particle {
+            opacity: 1;
+            animation: float 3s ease-in-out infinite;
         }
 
         /* Sections */
@@ -196,10 +309,11 @@
             font-size: 2.5rem;
             margin-bottom: 3rem;
             text-align: center;
-            background: linear-gradient(45deg, #2E8B57, #4A90E2);
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            transition: all 0.8s ease;
         }
 
         /* About Section */
@@ -214,19 +328,21 @@
             width: 250px;
             height: 250px;
             border-radius: 50%;
-            background: linear-gradient(45deg, #2E8B57, #4A90E2);
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 4rem;
             margin: 0 auto;
             animation: float 3s ease-in-out infinite;
+            transition: all 0.8s ease;
         }
 
         .about-text {
             font-size: 1.1rem;
             line-height: 1.8;
-            color: #cccccc;
+            color: var(--text-secondary);
+            transition: all 0.8s ease;
         }
 
         .about-text p {
@@ -244,24 +360,26 @@
             background: rgba(45, 45, 45, 0.5);
             padding: 2rem;
             border-radius: 15px;
-            border: 1px solid rgba(70, 144, 226, 0.2);
-            transition: transform 0.3s ease, border-color 0.3s ease;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease, border-color 0.3s ease, background 0.8s ease;
         }
 
         .background-card:hover {
             transform: translateY(-10px);
-            border-color: #4A90E2;
+            border-color: var(--secondary-color);
         }
 
         .background-card h3 {
-            color: #2E8B57;
+            color: var(--primary-color);
             margin-bottom: 1rem;
             font-size: 1.3rem;
+            transition: all 0.8s ease;
         }
 
         .background-card p {
-            color: #cccccc;
+            color: var(--text-secondary);
             line-height: 1.6;
+            transition: all 0.8s ease;
         }
 
         /* Tech Journey */
@@ -325,7 +443,7 @@
             border-radius: 15px;
             border: 1px solid rgba(255, 107, 53, 0.2);
             text-align: center;
-            transition: transform 0.3s ease, border-color 0.3s ease;
+            transition: transform 0.3s ease, border-color 0.3s ease, background 0.8s ease;
             min-height: 200px;
             display: flex;
             flex-direction: column;
@@ -334,23 +452,30 @@
 
         .project-card:hover {
             transform: translateY(-10px);
-            border-color: #FF6B35;
+            border-color: var(--accent-color);
+        }
+
+        .project-card h3 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            transition: all 0.8s ease;
+        }
+
+        .project-card p {
+            color: var(--text-tertiary);
+            font-style: italic;
+            transition: all 0.8s ease;
         }
 
         .project-placeholder {
             font-size: 3rem;
             color: #555;
             margin-bottom: 1rem;
+            transition: all 0.8s ease;
         }
 
-        .project-card h3 {
-            color: #FF6B35;
-            margin-bottom: 1rem;
-        }
-
-        .project-card p {
-            color: #aaaaaa;
-            font-style: italic;
+        [data-theme="dev"] .project-placeholder {
+            color: var(--primary-color);
         }
 
         /* Contact Section */
@@ -375,15 +500,15 @@
             padding: 1rem 2rem;
             background: rgba(45, 45, 45, 0.5);
             border-radius: 50px;
-            color: #ffffff;
+            color: var(--text-primary);
             text-decoration: none;
             transition: all 0.3s ease;
             border: 1px solid transparent;
         }
 
         .contact-link:hover {
-            background: rgba(70, 144, 226, 0.2);
-            border-color: #4A90E2;
+            background: var(--particle-color);
+            border-color: var(--secondary-color);
             transform: translateY(-3px);
         }
 
@@ -446,6 +571,20 @@
             .section {
                 padding: 80px 1rem;
             }
+
+            .theme-toggle {
+                right: 10px;
+                padding: 10px;
+            }
+
+            .theme-icon {
+                font-size: 1.2rem;
+            }
+
+            .dna-container {
+                width: 300px;
+                height: 300px;
+            }
         }
 
         /* Scroll indicator */
@@ -461,13 +600,19 @@
 
         .scroll-progress {
             height: 100%;
-            background: linear-gradient(90deg, #2E8B57, #4A90E2, #FF6B35);
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--accent-color));
             width: 0%;
-            transition: width 0.1s ease;
+            transition: width 0.1s ease, background 0.8s ease;
         }
     </style>
 </head>
 <body>
+    <!-- Theme Toggle Button -->
+    <div class="theme-toggle" id="themeToggle">
+        <div class="theme-icon active" id="bioIcon">🧬</div>
+        <div class="theme-icon" id="devIcon">💻</div>
+    </div>
+
     <!-- Scroll Progress Indicator -->
     <div class="scroll-indicator">
         <div class="scroll-progress"></div>
@@ -499,10 +644,34 @@
             </p>
             <a href="#about" class="cta-button">더 알아보기</a>
         </div>
-        <div class="dna-container">
+        <div class="dna-container" id="dnaContainer">
             <div class="dna-helix">
                 <div class="dna-strand"></div>
                 <div class="dna-strand"></div>
+                
+                <!-- DNA Elements -->
+                <div class="dna-element" style="top: 10%; left: 25%; animation-delay: 0s;">A</div>
+                <div class="dna-element" style="top: 15%; right: 25%; animation-delay: 0.2s;">T</div>
+                <div class="dna-element" style="top: 25%; left: 30%; animation-delay: 0.4s;">C</div>
+                <div class="dna-element" style="top: 35%; right: 30%; animation-delay: 0.6s;">G</div>
+                <div class="dna-element" style="top: 45%; left: 28%; animation-delay: 0.8s;">T</div>
+                <div class="dna-element" style="top: 55%; right: 28%; animation-delay: 1s;">A</div>
+                <div class="dna-element" style="top: 65%; left: 32%; animation-delay: 1.2s;">G</div>
+                <div class="dna-element" style="top: 75%; right: 32%; animation-delay: 1.4s;">C</div>
+                <div class="dna-element" style="top: 85%; left: 26%; animation-delay: 1.6s;">A</div>
+                <div class="dna-element" style="top: 90%; right: 26%; animation-delay: 1.8s;">T</div>
+                
+                <!-- Code Particles (initially hidden) -->
+                <div class="code-particle" style="top: 10%; left: 25%; animation-delay: 0s;">HTML</div>
+                <div class="code-particle" style="top: 15%; right: 25%; animation-delay: 0.2s;">CSS</div>
+                <div class="code-particle" style="top: 25%; left: 30%; animation-delay: 0.4s;">JS</div>
+                <div class="code-particle" style="top: 35%; right: 30%; animation-delay: 0.6s;">Kotlin</div>
+                <div class="code-particle" style="top: 45%; left: 28%; animation-delay: 0.8s;">React</div>
+                <div class="code-particle" style="top: 55%; right: 28%; animation-delay: 1s;">Node</div>
+                <div class="code-particle" style="top: 65%; left: 32%; animation-delay: 1.2s;">Git</div>
+                <div class="code-particle" style="top: 75%; right: 32%; animation-delay: 1.4s;">API</div>
+                <div class="code-particle" style="top: 85%; left: 26%; animation-delay: 1.6s;">DB</div>
+                <div class="code-particle" style="top: 90%; right: 26%; animation-delay: 1.8s;">UI</div>
             </div>
         </div>
     </section>
@@ -634,6 +803,155 @@
     </section>
 
     <script>
+        // Theme Management
+        class ThemeManager {
+            constructor() {
+                this.currentTheme = localStorage.getItem('theme') || 'bio';
+                this.init();
+            }
+
+            init() {
+                this.applyTheme(this.currentTheme);
+                this.setupToggle();
+            }
+
+            applyTheme(theme) {
+                document.documentElement.setAttribute('data-theme', theme);
+                this.currentTheme = theme;
+                localStorage.setItem('theme', theme);
+                this.updateToggleIcons();
+            }
+
+            updateToggleIcons() {
+                const bioIcon = document.getElementById('bioIcon');
+                const devIcon = document.getElementById('devIcon');
+                
+                if (this.currentTheme === 'bio') {
+                    bioIcon.classList.add('active');
+                    devIcon.classList.remove('active');
+                } else {
+                    bioIcon.classList.remove('active');
+                    devIcon.classList.add('active');
+                }
+            }
+
+            setupToggle() {
+                const toggle = document.getElementById('themeToggle');
+                toggle.addEventListener('click', () => {
+                    const newTheme = this.currentTheme === 'bio' ? 'dev' : 'bio';
+                    this.applyTheme(newTheme);
+                    
+                    // Trigger DNA morphing animation
+                    if (newTheme === 'dev') {
+                        dnaAnimation.startMorphing();
+                    } else {
+                        dnaAnimation.stopMorphing();
+                    }
+                });
+            }
+        }
+
+        // DNA Animation Manager
+        class DNAAnimationManager {
+            constructor() {
+                this.container = document.getElementById('dnaContainer');
+                this.isMorphing = false;
+                this.morphTimer = null;
+                this.init();
+            }
+
+            init() {
+                this.setupEventListeners();
+            }
+
+            setupEventListeners() {
+                // Mouse hover events
+                this.container.addEventListener('mouseenter', () => {
+                    if (!this.isMorphing) {
+                        this.startMorphing();
+                        setTimeout(() => this.stopMorphing(), 3000);
+                    }
+                });
+
+                // Click event for manual toggle
+                this.container.addEventListener('click', () => {
+                    if (this.isMorphing) {
+                        this.stopMorphing();
+                    } else {
+                        this.startMorphing();
+                        setTimeout(() => this.stopMorphing(), 5000);
+                    }
+                });
+
+                // Scroll-based morphing
+                window.addEventListener('scroll', () => {
+                    const scrolled = window.pageYOffset;
+                    const windowHeight = window.innerHeight;
+                    
+                    if (scrolled > windowHeight * 0.3 && scrolled < windowHeight * 0.8) {
+                        if (!this.isMorphing) {
+                            this.startMorphing();
+                        }
+                    } else if (scrolled > windowHeight * 0.8) {
+                        this.stopMorphing();
+                    }
+                });
+            }
+
+            startMorphing() {
+                this.isMorphing = true;
+                this.container.classList.add('morphing');
+                
+                // Add staggered animation to elements
+                const dnaElements = this.container.querySelectorAll('.dna-element');
+                const codeParticles = this.container.querySelectorAll('.code-particle');
+                
+                dnaElements.forEach((element, index) => {
+                    setTimeout(() => {
+                        element.style.opacity = '0';
+                        element.style.transform = 'scale(0) rotate(180deg)';
+                    }, index * 100);
+                });
+
+                setTimeout(() => {
+                    codeParticles.forEach((particle, index) => {
+                        setTimeout(() => {
+                            particle.style.opacity = '1';
+                            particle.style.transform = 'scale(1.2) rotate(0deg)';
+                        }, index * 100);
+                    });
+                }, 800);
+            }
+
+            stopMorphing() {
+                this.isMorphing = false;
+                this.container.classList.remove('morphing');
+                
+                const dnaElements = this.container.querySelectorAll('.dna-element');
+                const codeParticles = this.container.querySelectorAll('.code-particle');
+                
+                codeParticles.forEach((particle, index) => {
+                    setTimeout(() => {
+                        particle.style.opacity = '0';
+                        particle.style.transform = 'scale(0) rotate(-180deg)';
+                    }, index * 100);
+                });
+
+                setTimeout(() => {
+                    dnaElements.forEach((element, index) => {
+                        setTimeout(() => {
+                            element.style.opacity = '0.8';
+                            element.style.transform = 'scale(1) rotate(0deg)';
+                        }, index * 100);
+                    });
+                }, 800);
+            }
+        }
+
+        // Initialize managers
+        const themeManager = new ThemeManager();
+        const dnaAnimation = new DNAAnimationManager();
+
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -726,7 +1044,7 @@
             
             window.addEventListener('scroll', () => {
                 const scrolled = window.pageYOffset;
-                const rate = scrolled * -0.5;
+                const rate = scrolled * -0.3;
                 dnaContainer.style.transform = `translate(-50%, -50%) rotate(${rate}deg)`;
             });
         }
@@ -757,6 +1075,27 @@
                 typeWriter(subtitle, text, 150);
             }
         });
+
+        // Enhanced card interactions for different themes
+        function updateCardInteractions() {
+            const cards = document.querySelectorAll('.background-card, .project-card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    const currentTheme = document.documentElement.getAttribute('data-theme');
+                    if (currentTheme === 'dev') {
+                        this.style.boxShadow = '0 20px 40px rgba(0, 255, 0, 0.2)';
+                    } else {
+                        this.style.boxShadow = '0 20px 40px rgba(46, 139, 87, 0.2)';
+                    }
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.boxShadow = 'none';
+                });
+            });
+        }
+
+        updateCardInteractions();
     </script>
 </body>
 </html>
